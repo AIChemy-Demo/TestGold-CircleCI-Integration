@@ -37,7 +37,11 @@ jobs:
             pip install selenium-20.11.0-py2.py3-none-any.whl -U
             export TG_ANALYZER=1
             export TG_TOKEN=$TG_TOKEN
-      
+      - run:
+          name: Configure Chrome and Firefox
+          command: |
+            sudo apt install google-chrome-stable
+            sudo apt-get install firefox
       - python/install-packages:
           pkg-manager: pip
           # app-dir: ~/project/package-directory/  # If you're requirements.txt isn't in the root directory.
