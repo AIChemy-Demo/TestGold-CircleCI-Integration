@@ -29,14 +29,22 @@ jobs:
     # CircleCI will report the results back to your VCS provider.
     steps:
       - checkout
+      - run:
+          name: Download and Configure TestGold Interceptor
+          command: |
+            # Get the TestGold Interceptor 
+            wget https://tgapiutils.blob.core.windows.net/interceptor-packages/selenium-20.11.0-py2.py3-none-any.whl -O selenium-20.11.0-py2.py3-none-any.whl
+            pip install selenium-20.11.0-py2.py3-none-any.whl -U
+            export TG_ANALYZER=1
+            export TG_TOKEN=$TG_TOKEN
+      
       - python/install-packages:
           pkg-manager: pip
           # app-dir: ~/project/package-directory/  # If you're requirements.txt isn't in the root directory.
           # pip-dependency-file: test-requirements.txt  # if you have a different name for your requirements file, maybe one that combines your runtime and test requirements.
       - run:
           name: Run tests
-          # This assumes pytest is installed via the install-package step above
-          command: pytest
+          command: python reactbank_test_old.py
 
 # Invoke jobs via workflows
 # See: https://circleci.com/docs/2.0/configuration-reference/#workflows
